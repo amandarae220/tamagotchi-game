@@ -1,0 +1,104 @@
+.game-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  padding: 40px;
+}
+
+.pet-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+}
+
+.pet-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 320px;
+}
+
+.pet-preview canvas {
+  animation: petFloat 3s ease-in-out infinite;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.feed { background:#f3d97a; }
+.play { background:#9ec7de; }
+.nap { background:#c8c3e6; }
+.bath { background:#b7c4e6; }
+.cuddle { background:#e6b7d3; }
+
+.stat {
+  margin-bottom: 14px;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.bar {
+  height: 10px;
+  background: #e5e5e5;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.fill.yellow { background: #f4d35e; }
+.fill.green { background: #74c69d; }
+.fill.blue { background: #90caf9; }
+.fill.purple { background: #b39ddb; }
+
+.stats-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mood-pill {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #dbeafe;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.management-card {
+  margin-top: 16px;
+}
+
+.management-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.management-actions button {
+  border-radius: 999px;
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+div.card.actions-card {
+  margin-top: 12px;
+}
+

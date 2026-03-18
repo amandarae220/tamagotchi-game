@@ -1,0 +1,189 @@
+.setup-page {
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.setup-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .setup-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 32px;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.7);
+
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.pet-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 320px;
+}
+
+.pet-preview canvas {
+  animation: petFloat 3s ease-in-out infinite;
+}
+
+@keyframes petFloat {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+
+canvas {
+  image-rendering: pixelated;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: 600;
+}
+
+input {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid #d8d8d8;
+  background: #f4f4f4;
+}
+
+.species-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.species-btn {
+  border-radius: 999px;
+  padding: 8px 18px;
+  border: none;
+
+  background: #e8e8e8;
+  cursor: pointer;
+
+  transition: all .15s ease;
+}
+
+.species-btn.active {
+  background: #111;
+  color: white;
+}
+
+.theme-selector {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.theme-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+
+  padding: 8px;
+
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.1);
+
+  background: rgba(255,255,255,0.7);
+  cursor: pointer;
+}
+
+.theme-card:hover {
+  transform: translateY(-2px);
+}
+
+.theme-card.active {
+  border: 2px solid #111;
+  background: white;
+  box-shadow: 0 0 0 2px #111 inset;
+}
+
+/* preview square */
+
+.theme-preview {
+  width: 40px;   // match React EXACTLY
+  height: 32px;
+
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,0.15);
+
+  overflow: hidden;
+
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.theme-card span {
+  font-size: 11px;
+  color: #444;
+}
+
+.start-btn {
+  margin-top: 24px;
+
+  border: none;
+  border-radius: 999px;
+
+  padding: 14px 28px;
+  font-size: 16px;
+
+  background: #86c5a4;
+  color: #1a1a1a;
+
+  cursor: pointer;
+
+  transition: transform .15s, box-shadow .15s;
+}
+
+.start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+button.active {
+  border: 2px solid #333;
+}
+
+.input-error {
+  border: 2px solid #e05c5c;
+  background: #fff6f6;
+  animation: shake .25s linear;
+}
+
+.error-message {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #e05c5c;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0px); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0px); }
+}
