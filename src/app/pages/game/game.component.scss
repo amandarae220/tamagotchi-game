@@ -1,14 +1,21 @@
+/* ---------------- LAYOUT ---------------- */
+
 .game-layout {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 24px;
-  padding: 40px;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  padding: 16px;
 }
+
+/* ---------------- PET ---------------- */
 
 .pet-card {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+
+  padding: 20px;
   background: #fff;
 }
 
@@ -16,28 +23,57 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
-  height: 320px;
 }
 
 .pet-preview canvas {
+  max-width: 140px;    
+  height: auto;
   animation: petFloat 3s ease-in-out infinite;
 }
 
-.actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+@keyframes petFloat {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
 }
 
-.feed { background:#f3d97a; }
-.play { background:#9ec7de; }
-.nap { background:#c8c3e6; }
-.bath { background:#b7c4e6; }
-.cuddle { background:#e6b7d3; }
+/* ---------------- ACTIONS ---------------- */
+
+.actions-card {
+  margin-top: 8px;
+}
+
+.actions {
+  display: inline-flex;
+  /*grid-template-columns: repeat(2, 1fr);*/
+  gap: 12px;
+}
+
+.actions button {
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.actions button:active {
+  transform: scale(0.97);
+}
+
+/* button colors */
+
+.feed { background: #f3d97a; }
+.play { background: #9ec7de; }
+.nap { background: #c8c3e6; }
+.bath { background: #b7c4e6; }
+.cuddle { background: #e6b7d3; }
+
+/* ---------------- STATS ---------------- */
 
 .stat {
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .stat-row {
@@ -65,40 +101,79 @@
 .fill.blue { background: #90caf9; }
 .fill.purple { background: #b39ddb; }
 
+/* ---------------- STATS HEADER ---------------- */
+
 .stats-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 8px;
 }
 
 .mood-pill {
-  padding: 4px 10px;
+  padding: 6px 12px;
   border-radius: 999px;
   background: #dbeafe;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: capitalize;
 }
 
+/* ---------------- MANAGEMENT ---------------- */
+
 .management-card {
-  margin-top: 16px;
+  margin-top: 8px;
 }
 
 .management-actions {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 10px;
-  flex-wrap: wrap;
 }
 
 .management-actions button {
   border-radius: 999px;
-  padding: 8px 16px;
+  padding: 12px;
   border: 1px solid #ccc;
   background: #f5f5f5;
   cursor: pointer;
+  font-size: 14px;
 }
 
-div.card.actions-card {
-  margin-top: 12px;
-}
+/* ---------------- DESKTOP ENHANCEMENT ---------------- */
 
+@media (min-width: 768px) {
+
+  .game-layout {
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+    padding: 40px;
+  }
+
+  /* LEFT COLUMN */
+  .pet-card {
+    grid-column: 1;
+  }
+
+  .actions-card {
+    grid-column: 1;
+  }
+
+  /* RIGHT COLUMN */
+  .stats-card {
+    grid-column: 2;
+  }
+
+  .management-card {
+    grid-column: 2;
+  }
+
+  /* actions go horizontal again */
+  .actions {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .management-actions {
+    grid-template-columns: 1fr;
+  }
+}

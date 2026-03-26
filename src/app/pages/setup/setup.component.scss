@@ -10,6 +10,8 @@
 
   max-width: 1100px;
   margin: 0 auto;
+
+  box-sizing: border-box;
 }
 
 @media (max-width: 900px) {
@@ -24,10 +26,10 @@
   padding: 32px;
 
   box-shadow:
-    0 10px 25px rgba(0,0,0,0.08),
-    inset 0 1px 0 rgba(255,255,255,0.7);
+    0 10px 25px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
 
-  border: 1px solid rgba(0,0,0,0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .pet-preview {
@@ -43,9 +45,17 @@
 }
 
 @keyframes petFloat {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
-  100% { transform: translateY(0px); }
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 canvas {
@@ -94,7 +104,7 @@ input {
 
 .theme-selector {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
   gap: 8px;
 }
 
@@ -107,9 +117,9 @@ input {
   padding: 8px;
 
   border-radius: 12px;
-  border: 1px solid rgba(0,0,0,0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 
-  background: rgba(255,255,255,0.7);
+  background: rgba(255, 255, 255, 0.7);
   cursor: pointer;
 }
 
@@ -126,15 +136,15 @@ input {
 /* preview square */
 
 .theme-preview {
-  width: 40px;   // match React EXACTLY
+  width: 40px; // match React EXACTLY
   height: 32px;
 
   border-radius: 6px;
-  border: 1px solid rgba(0,0,0,0.15);
+  border: 1px solid rgba(0, 0, 0, 0.15);
 
   overflow: hidden;
 
-  box-shadow: inset 0 2px 6px rgba(0,0,0,0.08);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .theme-card span {
@@ -161,7 +171,7 @@ input {
 
 .start-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 button.active {
@@ -181,9 +191,23 @@ button.active {
 }
 
 @keyframes shake {
-  0% { transform: translateX(0px); }
-  25% { transform: translateX(-4px); }
-  50% { transform: translateX(4px); }
-  75% { transform: translateX(-4px); }
-  100% { transform: translateX(0px); }
+  0% {
+    transform: translateX(0px);
+  }
+
+  25% {
+    transform: translateX(-4px);
+  }
+
+  50% {
+    transform: translateX(4px);
+  }
+
+  75% {
+    transform: translateX(-4px);
+  }
+
+  100% {
+    transform: translateX(0px);
+  }
 }

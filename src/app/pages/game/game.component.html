@@ -1,104 +1,91 @@
 <div class="game-page" [ngStyle]="getThemeStyle(pet.theme)">
   <div class="game-layout">
 
-    <div class="left">
+    <!-- 🐣 PET -->
+    <div class="card pet-card">
+      <h3>{{ pet.petName }}</h3>
 
-<div class="card pet-card">
+      <div class="pet-preview">
+        <canvas #canvas></canvas>
+      </div>
+    </div>
 
-  <h3>{{ pet.petName }}</h3>
+    <!-- 📊 STATS -->
+    <div class="card stats-card">
 
-  <div class="pet-preview">
-    <canvas #canvas></canvas>
-  </div>
+      <div class="stats-header">
+        <h4>Stats</h4>
+        <span class="mood-pill">{{ getMood() }}</span>
+      </div>
 
-</div>
-
-      <div class="card actions-card">
-        <h4>Actions</h4>
-
-        <div class="actions">
-          <button class="btn feed" (click)="feed()">Feed</button>
-          <button class="btn play" (click)="play()">Play</button>
-          <button class="btn nap" (click)="nap()">Nap</button>
-          <button class="btn bath" (click)="bathe()">Bath</button>
-          <button class="btn cuddle" (click)="cuddle()">Cuddle</button>
+      <div class="stat">
+        <div class="stat-row">
+          <label>Fullness</label>
+          <span>{{ pet.needs.fullness }}%</span>
         </div>
+        <div class="bar">
+          <div class="fill yellow" [style.width.%]="pet.needs.fullness"></div>
+        </div>
+      </div>
 
+      <div class="stat">
+        <div class="stat-row">
+          <label>Energy</label>
+          <span>{{ pet.needs.energy }}%</span>
+        </div>
+        <div class="bar">
+          <div class="fill green" [style.width.%]="pet.needs.energy"></div>
+        </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-row">
+          <label>Joy</label>
+          <span>{{ pet.needs.joy }}%</span>
+        </div>
+        <div class="bar">
+          <div class="fill blue" [style.width.%]="pet.needs.joy"></div>
+        </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-row">
+          <label>Clean</label>
+          <span>{{ pet.needs.clean }}%</span>
+        </div>
+        <div class="bar">
+          <div class="fill purple" [style.width.%]="pet.needs.clean"></div>
+        </div>
       </div>
 
     </div>
 
-    <div class="right">
+    <!-- 🎮 ACTIONS -->
+    <div class="card actions-card">
+      <h4>Actions</h4>
 
-<div class="card stats-card">
-
-  <div class="stats-header">
-    <h4>Stats</h4>
-    <span class="mood-pill">{{ getMood() }}</span>
-  </div>
-
-  <div class="stat">
-    <div class="stat-row">
-      <label>Fullness</label>
-      <span>{{ pet.needs.fullness }}%</span>
+      <div class="actions">
+        <button class="btn feed" (click)="feed()">Feed</button>
+        <button class="btn play" (click)="play()">Play</button>
+        <button class="btn nap" (click)="nap()">Nap</button>
+        <button class="btn bath" (click)="bathe()">Bath</button>
+        <!--button class="btn cuddle" (click)="cuddle()">Cuddle</button-->
+      </div>
     </div>
-    <div class="bar">
-      <div class="fill yellow"
-        [style.width.%]="pet.needs.fullness"></div>
-    </div>
-  </div>
 
-  <div class="stat">
-    <div class="stat-row">
-      <label>Energy</label>
-      <span>{{ pet.needs.energy }}%</span>
-    </div>
-    <div class="bar">
-      <div class="fill green"
-        [style.width.%]="pet.needs.energy"></div>
-    </div>
-  </div>
+    <!-- ⚙️ MANAGEMENT -->
+    <div class="card management-card">
+      <h4>Management</h4>
 
-  <div class="stat">
-    <div class="stat-row">
-      <label>Joy</label>
-      <span>{{ pet.needs.joy }}%</span>
-    </div>
-    <div class="bar">
-      <div class="fill blue"
-        [style.width.%]="pet.needs.joy"></div>
-    </div>
-  </div>
+      <div class="management-actions">
+        <button (click)="togglePause()">
+          {{ isPaused ? 'Resume' : 'Pause' }}
+        </button>
 
-  <div class="stat">
-    <div class="stat-row">
-      <label>Clean</label>
-      <span>{{ pet.needs.clean }}%</span>
-    </div>
-    <div class="bar">
-      <div class="fill purple"
-        [style.width.%]="pet.needs.clean"></div>
-    </div>
-  </div>
+        <button (click)="goToSetup()">New</button>
 
-</div>
-
-<div class="card management-card">
-
-  <h4>Management</h4>
-
-  <div class="management-actions">
-    <button (click)="togglePause()">
-      {{ isPaused ? 'Resume' : 'Pause' }}
-    </button>
-
-    <button (click)="goToSetup()">New</button>
-
-    <button (click)="pet.reset()">Reset</button>
-  </div>
-
-</div>
-
+        <button (click)="pet.reset()">Reset</button>
+      </div>
     </div>
 
   </div>

@@ -69,12 +69,12 @@ startGameLoop() {
   this.intervalId = setInterval(() => {
 
     if (!this.isPaused) {
-      this.decayNeeds();
+      this.pet.transition('TIME_TICK');
     }
 
-    this.loadPetImage(); 
+    this.loadPetImage();
 
-  }, 500);
+  }, 2000);
 }
 
 togglePause() {
@@ -117,11 +117,11 @@ render() {
   }
 
   // ✅ actions (match HTML + service)
-  feed() { this.pet.feed(); }
-  play() { this.pet.play(); }
-  nap() { this.pet.nap(); }
-  bathe() { this.pet.bathe(); }
-  cuddle() { this.pet.cuddle(); }
+  feed() { this.pet.transition('FEED'); }
+  play() { this.pet.transition('PLAY'); }
+  nap() { this.pet.transition('SLEEP'); }
+  bathe() { this.pet.transition('BATHE'); }
+  cuddle() { this.pet.transition('CUDDLE'); }
 
   // ✅ theme background (fixes your earlier error)
   getThemeStyle(theme: Theme) {

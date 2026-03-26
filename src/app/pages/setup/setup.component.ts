@@ -82,6 +82,8 @@ export class SetupComponent implements AfterViewInit {
     this.petState.petType = this.petType;
     this.petState.theme = this.theme;
 
+    this.petState.save();   
+
     this.router.navigate(['/game']);
   }
 

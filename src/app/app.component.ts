@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { PetStateService } from './services/pet-state.service';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -8,4 +9,12 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {}
+
+export class AppComponent implements OnInit {
+
+  constructor(private pet: PetStateService) {}
+
+  ngOnInit() {
+    this.pet.load();
+  }
+}
