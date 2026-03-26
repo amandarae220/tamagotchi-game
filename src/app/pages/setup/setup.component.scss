@@ -44,6 +44,19 @@
   animation: petFloat 3s ease-in-out infinite;
 }
 
+.preview-card {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  border-radius: 16px;
+}
+
+.preview-card img {
+  display: block;
+  margin: 0 auto;
+  image-rendering: pixelated;
+}
+
 @keyframes petFloat {
   0% {
     transform: translateY(0px);
