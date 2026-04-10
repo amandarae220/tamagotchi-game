@@ -1,35 +1,7 @@
-.setup-page {
-  min-height: 100vh;
-  padding: 2rem;
-}
-
-.setup-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 36px;
-
-  max-width: 1100px;
-  margin: 0 auto;
-
+*,
+*::before,
+*::after {
   box-sizing: border-box;
-}
-
-@media (max-width: 900px) {
-  .setup-container {
-    grid-template-columns: 1fr;
-  }
-}
-
-.card {
-  background: #fff;
-  border-radius: 24px;
-  padding: 32px;
-
-  box-shadow:
-    0 10px 25px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
-
-  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .pet-preview {
@@ -37,24 +9,55 @@
   justify-content: center;
   align-items: center;
 
-  height: 320px;
+  aspect-ratio: 1 / 1;
+  max-height: 280px;                    
 }
 
 .pet-preview canvas {
   animation: petFloat 3s ease-in-out infinite;
+  display: block;
+  margin: 0 auto;
 }
 
-.preview-card {
-  width: 100%;
-  max-width: 320px;
-  margin: 0 auto;
-  border-radius: 16px;
-}
 
 .preview-card img {
   display: block;
   margin: 0 auto;
   image-rendering: pixelated;
+}
+
+.setup-container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 36px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .setup-container {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    width: 100%;
+    justify-items: center;
+  }
+
+  .preview-card,
+  .setup-card {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+  }
+}
+
+.setup-page {
+  min-height: 100vh;
+  padding: 24px 16px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: clip;
 }
 
 @keyframes petFloat {
