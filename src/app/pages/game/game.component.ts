@@ -1,17 +1,16 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
-  ViewChild,
-  AfterViewInit,
   OnDestroy,
-  OnInit
+  OnInit,
+  ViewChild
 } from '@angular/core';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { PetEvent, STAT_OPTIONS, StatOption, THEME_STYLES } from '../../pet.models';
 import { PetStateService } from '../../services/pet-state.service';
-
-/* ✅ shared types */
-type Theme = 'tan' | 'mint' | 'lavender' | 'peach' | 'sky';
+import { SpriteLoaderService } from '../../services/sprite-loader.service';
 
 @Component({
   standalone: true,
@@ -20,142 +19,93 @@ type Theme = 'tan' | 'mint' | 'lavender' | 'peach' | 'sky';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
-
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
+  isPaused = false;
+  readonly stats = STAT_OPTIONS;
+  private ctx?: CanvasRenderingContext2D;
+  private intervalId?: ReturnType<typeof setInterval>;
 
-  ctx!: CanvasRenderingContext2D;
-  currentImage = new Image();
-  intervalId!: any;
-  
-isPaused = false;
+  constructor(
+    public pet: PetStateService,
+    private router: Router,
+    private spriteLoader: SpriteLoaderService
+  ) {}
 
-constructor(public pet: PetStateService, private router: Router) {}
+  ngOnInit(): void {
+    if (!this.pet.petName) {
+      this.router.navigate(['/']);
+    }
+  }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     const canvas = this.canvasRef.nativeElement;
-
     const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    if (!ctx) {
+      return;
+    }
 
     this.ctx = ctx;
-
-    this.loadPetImage();
+    void this.renderCurrentSprite();
     this.startGameLoop();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     clearInterval(this.intervalId);
   }
 
-  ngOnInit() {
-  // 🧠 safety check — ensures data exists
-  if (!this.pet.petName) {
-    console.warn('Pet name missing — redirecting to setup');
+  get themeStyle(): Record<string, string> {
+    return THEME_STYLES[this.pet.theme];
+  }
+
+  performAction(event: PetEvent): void {
+    this.pet.transition(event);
+    void this.renderCurrentSprite();
+  }
+
+  trackStat(_: number, stat: StatOption): string {
+    return stat.key;
+  }
+
+  togglePause(): void {
+    this.isPaused = !this.isPaused;
+  }
+
+  goToSetup(): void {
     this.router.navigate(['/']);
   }
-}
 
-loadPetImage() {
-  this.currentImage = new Image();
+  resetPet(): void {
+    this.pet.reset();
+    void this.renderCurrentSprite();
+  }
 
-  this.currentImage.onload = () => {
-    this.render();
-  };
+  private startGameLoop(): void {
+    this.intervalId = setInterval(() => {
+      if (this.isPaused) {
+        return;
+      }
 
-  this.currentImage.src = this.pet.getCurrentSpritePath();
-}
-
-startGameLoop() {
-  this.intervalId = setInterval(() => {
-
-    if (!this.isPaused) {
       this.pet.transition('TIME_TICK');
+      void this.renderCurrentSprite();
+    }, 2000);
+  }
+
+  private async renderCurrentSprite(): Promise<void> {
+    const canvas = this.canvasRef.nativeElement;
+    const ctx = this.ctx;
+    if (!ctx) {
+      return;
     }
 
-    this.loadPetImage();
-
-  }, 2000);
-}
-
-togglePause() {
-  this.isPaused = !this.isPaused;
-}
-
-goToSetup() {
-  this.router.navigate(['/']);
-}
-
-decayNeeds() {
-  this.pet.needs.fullness = this.clamp(this.pet.needs.fullness - 2);
-  this.pet.needs.energy = this.clamp(this.pet.needs.energy - 1);
-  this.pet.needs.joy = this.clamp(this.pet.needs.joy - 1);
-  this.pet.needs.clean = this.clamp(this.pet.needs.clean - 1);
-
-  this.render(); 
-}
-
-render() {
-  const canvas = this.canvasRef.nativeElement;
-  const ctx = this.ctx;
-
-  if (!this.currentImage.complete) return;
-
-  // ✅ match setup exactly
-  canvas.width = this.currentImage.width;
-  canvas.height = this.currentImage.height;
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  ctx.imageSmoothingEnabled = false;
-
-  ctx.drawImage(this.currentImage, 0, 0);
-}
-
-  // ✅ keep values between 0–100
-  clamp(val: number) {
-    return Math.max(0, Math.min(100, val));
+    try {
+      const sprite = await this.spriteLoader.loadSprite(this.pet.getCurrentSpritePath());
+      canvas.width = sprite.width;
+      canvas.height = sprite.height;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(sprite, 0, 0);
+    } catch {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
   }
-
-  // ✅ actions (match HTML + service)
-  feed() { this.pet.transition('FEED'); }
-  play() { this.pet.transition('PLAY'); }
-  nap() { this.pet.transition('SLEEP'); }
-  bathe() { this.pet.transition('BATHE'); }
-  cuddle() { this.pet.transition('CUDDLE'); }
-
-  // ✅ theme background (fixes your earlier error)
-  getThemeStyle(theme: Theme) {
-    const dots: Record<Theme, { bg: string; dot: string }> = {
-      tan: { bg: '#fffdf8', dot: '#eadfce' },
-      mint: { bg: '#fbfffd', dot: '#d3f5e6' },
-      lavender: { bg: '#fdfbff', dot: '#e8e1ff' },
-      peach: { bg: '#fffaf6', dot: '#ffd9c2' },
-      sky: { bg: '#f9fbff', dot: '#d9eafe' },
-    };
-
-    const c = dots[theme];
-
-    return {
-      backgroundColor: c.bg,
-      backgroundImage: `
-        radial-gradient(${c.dot} 1.5px, transparent 2px),
-        radial-gradient(${c.dot} 1.5px, transparent 2px)
-      `,
-      backgroundPosition: '0 0, 12px 12px',
-      backgroundSize: '24px 24px',
-    };
-  }
-
-  getMood(): string {
-  const avg =
-    (this.pet.needs.fullness +
-      this.pet.needs.energy +
-      this.pet.needs.joy +
-      this.pet.needs.clean) / 4;
-
-  if (avg > 70) return 'happy';
-  if (avg > 40) return 'neutral';
-  return 'sad';
-}
-
 }

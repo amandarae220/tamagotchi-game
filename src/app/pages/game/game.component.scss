@@ -1,21 +1,31 @@
-/* ---------------- LAYOUT ---------------- */
+.game-page {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  overflow-x: clip;
+  padding: clamp(0.75rem, 2.5vw, 1.5rem);
+}
 
 .game-layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
-  padding: 16px;
+  gap: 1rem;
+  width: min(100%, 68rem);
+  margin: 0 auto;
+  min-width: 0;
 }
 
-/* ---------------- PET ---------------- */
+.game-layout > .card {
+  width: 100%;
+  min-width: 0;
+  justify-self: stretch;
+}
 
 .pet-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  padding: 20px;
   background: #fff;
 }
 
@@ -23,10 +33,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  min-height: 11rem;
 }
 
 .pet-preview canvas {
-  max-width: 140px;    
+  display: block;
+  max-width: 8.75rem;
+  width: 100%;
   height: auto;
   animation: petFloat 3s ease-in-out infinite;
 }
@@ -37,20 +51,20 @@
   100% { transform: translateY(0px); }
 }
 
-/* ---------------- ACTIONS ---------------- */
-
 .actions-card {
   margin-top: 8px;
 }
 
 .actions {
-  display: inline-flex;
-  /*grid-template-columns: repeat(2, 1fr);*/
-  gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  width: 100%;
 }
 
 .actions button {
-  padding: 0.5rem 1rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
   border-radius: 999px;
   border: none;
   font-size: 16px;
@@ -62,15 +76,11 @@
   transform: scale(0.97);
 }
 
-/* button colors */
-
 .feed { background: #f3d97a; }
 .play { background: #9ec7de; }
 .nap { background: #c8c3e6; }
 .bath { background: #b7c4e6; }
 .cuddle { background: #e6b7d3; }
-
-/* ---------------- STATS ---------------- */
 
 .stat {
   margin-bottom: 12px;
@@ -81,6 +91,7 @@
   justify-content: space-between;
   font-size: 13px;
   margin-bottom: 4px;
+  gap: 8px;
 }
 
 .bar {
@@ -101,13 +112,12 @@
 .fill.blue { background: #90caf9; }
 .fill.purple { background: #b39ddb; }
 
-/* ---------------- STATS HEADER ---------------- */
-
 .stats-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
+  gap: 8px;
 }
 
 .mood-pill {
@@ -117,9 +127,8 @@
   font-size: 12px;
   font-weight: 600;
   text-transform: capitalize;
+  white-space: nowrap;
 }
-
-/* ---------------- MANAGEMENT ---------------- */
 
 .management-card {
   margin-top: 8px;
@@ -129,9 +138,11 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 10px;
+  width: 100%;
 }
 
 .management-actions button {
+  width: 100%;
   border-radius: 999px;
   padding: 12px;
   border: 1px solid #ccc;
@@ -140,17 +151,24 @@
   font-size: 14px;
 }
 
-/* ---------------- DESKTOP ENHANCEMENT ---------------- */
-
-@media (min-width: 768px) {
-
-  .game-layout {
-    grid-template-columns: 2fr 1fr;
-    gap: 24px;
-    padding: 40px;
+@media (max-width: 380px) {
+  .actions {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
   }
 
-  /* LEFT COLUMN */
+  .actions button {
+    font-size: 15px;
+    padding: 0.7rem 0.8rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .game-layout {
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+  }
+
   .pet-card {
     grid-column: 1;
   }
@@ -159,7 +177,6 @@
     grid-column: 1;
   }
 
-  /* RIGHT COLUMN */
   .stats-card {
     grid-column: 2;
   }
@@ -168,12 +185,11 @@
     grid-column: 2;
   }
 
-  /* actions go horizontal again */
   .actions {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .management-actions {
-    grid-template-columns: 1fr;
+  .pet-preview canvas {
+    max-width: 11rem;
   }
 }
