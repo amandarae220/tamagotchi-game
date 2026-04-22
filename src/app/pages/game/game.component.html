@@ -1,16 +1,22 @@
 <div class="game-page" [ngStyle]="themeStyle">
   <div class="game-layout">
     <section class="card pet-card">
-      <h3>{{ pet.petName }}</h3>
+      <h1>{{ pet.petName }}</h1>
       <div class="pet-preview">
-        <canvas #canvas></canvas>
+        <canvas
+          #canvas
+          role="img"
+          [attr.aria-label]="pet.petName + ' the ' + pet.petType"
+        >
+          {{ pet.petName }} the {{ pet.petType }}
+        </canvas>
       </div>
     </section>
 
     <section class="card stats-card">
       <div class="stats-header">
-        <h4>Stats</h4>
-        <span class="mood-pill">{{ pet.mood }}</span>
+        <h2>Stats</h2>
+        <span class="mood-pill" aria-live="polite">{{ pet.mood }}</span>
       </div>
 
       <div *ngFor="let stat of stats; trackBy: trackStat" class="stat">
@@ -18,14 +24,21 @@
           <label>{{ stat.label }}</label>
           <span>{{ pet.needs[stat.key] }}%</span>
         </div>
-        <div class="bar">
+        <div
+          class="bar"
+          role="progressbar"
+          [attr.aria-label]="stat.label"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          [attr.aria-valuenow]="pet.needs[stat.key]"
+        >
           <div [ngClass]="['fill', stat.tone]" [style.width.%]="pet.needs[stat.key]"></div>
         </div>
       </div>
     </section>
 
     <section class="card actions-card">
-      <h4>Actions</h4>
+      <h2>Actions</h2>
       <div class="actions">
         <button type="button" class="btn feed" (click)="performAction('FEED')">Feed</button>
         <button type="button" class="btn play" (click)="performAction('PLAY')">Play</button>
@@ -35,9 +48,9 @@
     </section>
 
     <section class="card management-card">
-      <h4>Management</h4>
+      <h2>Management</h2>
       <div class="management-actions">
-        <button type="button" (click)="togglePause()">
+        <button type="button" [attr.aria-pressed]="isPaused" (click)="togglePause()">
           {{ isPaused ? 'Resume' : 'Pause' }}
         </button>
         <button type="button" (click)="goToSetup()">New</button>

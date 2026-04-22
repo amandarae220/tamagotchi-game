@@ -1,4 +1,4 @@
-export type Theme = 'tan' | 'mint' | 'lavender' | 'peach' | 'sky';
+export type Theme = 'mint' | 'lavender' | 'pink' | 'sky';
 export type PetType = 'duck' | 'dog';
 
 export type PetVisualState =
@@ -52,19 +52,17 @@ const themeStyle = (bg: string, dot: string): Record<string, string> => ({
 });
 
 export const THEME_STYLES: Record<Theme, Record<string, string>> = {
-  tan: themeStyle('#fffdf8', '#eadfce'),
   mint: themeStyle('#fbfffd', '#d3f5e6'),
   lavender: themeStyle('#fdfbff', '#e8e1ff'),
-  peach: themeStyle('#fffaf6', '#ffd9c2'),
+  pink: themeStyle('#fff7fb', '#f8cce0'),
   sky: themeStyle('#f9fbff', '#d9eafe')
 };
 
 export const THEME_OPTIONS: ThemeOption[] = [
-  { id: 'tan', label: 'tan', previewStyle: THEME_STYLES.tan },
-  { id: 'mint', label: 'mint', previewStyle: THEME_STYLES.mint },
   { id: 'lavender', label: 'lavender', previewStyle: THEME_STYLES.lavender },
-  { id: 'peach', label: 'peach', previewStyle: THEME_STYLES.peach },
-  { id: 'sky', label: 'sky', previewStyle: THEME_STYLES.sky }
+  { id: 'pink', label: 'pink', previewStyle: THEME_STYLES.pink },
+  { id: 'sky', label: 'sky', previewStyle: THEME_STYLES.sky },
+  { id: 'mint', label: 'mint', previewStyle: THEME_STYLES.mint }
 ];
 
 export const PET_OPTIONS: PetOption[] = [

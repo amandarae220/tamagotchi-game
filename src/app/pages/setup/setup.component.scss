@@ -16,6 +16,7 @@
 .setup-page {
   min-height: 100vh;
   display: flex;
+  align-items: flex-start;
   justify-content: center;
   padding: clamp(1rem, 3vw, 1.75rem);
   width: 100%;
@@ -69,6 +70,19 @@ canvas {
   image-rendering: pixelated;
 }
 
+.choice-group {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  margin: 0 0 1.25rem;
+}
+
+.choice-group legend {
+  padding: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
@@ -104,6 +118,12 @@ input {
   transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease;
 }
 
+.species-btn:hover,
+.theme-card:hover,
+.start-btn:hover {
+  transform: translateY(-2px);
+}
+
 .species-btn.active {
   background: #111;
   color: #fff;
@@ -126,11 +146,7 @@ input {
   border: 1px solid rgba(0, 0, 0, 0.1);
   background: rgba(255, 255, 255, 0.7);
   cursor: pointer;
-  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-}
-
-.theme-card:hover {
-  transform: translateY(-2px);
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 }
 
 .theme-card.active {
@@ -150,7 +166,7 @@ input {
 
 .theme-card span {
   font-size: 0.7rem;
-  color: #444;
+  color: #2f2f2f;
 }
 
 .start-btn {
@@ -166,11 +182,6 @@ input {
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.start-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
 .input-error {
   border: 2px solid #e05c5c;
   background: #fff6f6;
@@ -180,7 +191,7 @@ input {
 .error-message {
   margin-top: 0.375rem;
   font-size: 0.75rem;
-  color: #e05c5c;
+  color: #b42318;
 }
 
 @keyframes shake {
@@ -213,5 +224,33 @@ input {
 
   .pet-preview {
     width: min(100%, 11rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .setup-container {
+    align-items: stretch;
+  }
+
+  .setup-page {
+    align-items: center;
+    padding-block: 2.5rem;
+  }
+
+  .preview-card {
+    height: 100%;
+    align-content: stretch;
+    grid-template-rows: auto 1fr;
+  }
+
+  .pet-preview {
+    align-self: stretch;
+    width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+  }
+
+  .pet-preview canvas {
+    width: min(100%, 15rem);
   }
 }

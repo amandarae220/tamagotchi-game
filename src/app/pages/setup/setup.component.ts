@@ -19,7 +19,7 @@ export class SetupComponent implements AfterViewInit {
   showNameError = false;
   name = '';
   petType: PetType = 'duck';
-  theme: Theme = 'tan';
+  theme: Theme = 'lavender';
   readonly petOptions = PET_OPTIONS;
   readonly themeOptions = THEME_OPTIONS;
   private readonly nameRegex = /^[A-Za-z]+$/;

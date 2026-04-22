@@ -17,7 +17,7 @@ const DEFAULT_BASE_STATE: Extract<PetVisualState, 'happy' | 'idle' | 'sad'> = 'h
 export class PetStateService {
   petName = '';
   petType: PetType = 'duck';
-  theme: Theme = 'tan';
+  theme: Theme = 'lavender';
 
   private baseState: Extract<PetVisualState, 'happy' | 'idle' | 'sad'> = DEFAULT_BASE_STATE;
   private activeState: 'eating' | 'sleeping' | 'bathing' | null = null; 
@@ -155,7 +155,7 @@ export class PetStateService {
 
       this.petName = parsed.petName ?? '';
       this.petType = parsed.petType ?? 'duck';
-      this.theme = parsed.theme ?? 'tan';
+      this.theme = parsed.theme ?? 'lavender';
       this.baseState = parsed.baseState ?? DEFAULT_BASE_STATE;
       this.activeState = null;
 

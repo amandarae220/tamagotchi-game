@@ -1,14 +1,21 @@
 <div class="setup-page" [ngStyle]="selectedThemeStyle">
   <div class="setup-container">
     <section class="card preview-card">
-      <h3>Preview</h3>
+      <h1 class="visually-hidden">Create your virtual pet</h1>
+      <h2>Preview</h2>
       <div class="pet-preview">
-        <canvas #previewCanvas></canvas>
+        <canvas
+          #previewCanvas
+          role="img"
+          [attr.aria-label]="petType + ' preview'"
+        >
+          {{ petType }} preview
+        </canvas>
       </div>
     </section>
 
     <section class="card setup-card">
-      <h3>Create your pet</h3>
+      <h2>Create your pet</h2>
 
       <div class="form-group">
         <label for="petName">Name</label>
@@ -21,38 +28,45 @@
           pattern="^[A-Za-z]+$"
           (input)="showNameError = false"
           [class.input-error]="showNameError"
+          [attr.aria-invalid]="showNameError"
+          [attr.aria-describedby]="showNameError ? 'pet-name-error' : null"
         />
-        <div *ngIf="showNameError" class="error-message">
+        <div *ngIf="showNameError" id="pet-name-error" class="error-message" aria-live="assertive">
           Please enter a name using letters only.
         </div>
       </div>
 
-      <div class="form-group">
-        <label>Species</label>
-        <div class="species-buttons">
+      <fieldset class="form-group choice-group">
+        <legend>Species</legend>
+        <div class="species-buttons" role="radiogroup" aria-label="Pet species">
           <button
             *ngFor="let pet of petOptions"
             type="button"
+            role="radio"
             class="species-btn"
             [class.active]="petType === pet.id"
+            [attr.aria-checked]="petType === pet.id"
             (click)="selectPet(pet.id)"
           >
             {{ pet.label }}
           </button>
         </div>
-      </div>
+      </fieldset>
 
-      <div class="form-group">
-        <label>Theme</label>
-        <div class="theme-selector">
+      <fieldset class="form-group choice-group">
+        <legend>Theme</legend>
+        <div class="theme-selector" role="radiogroup" aria-label="Theme">
           <button
             *ngFor="let option of themeOptions"
             type="button"
+            role="radio"
             class="theme-card"
             [class.active]="theme === option.id"
+            [attr.aria-checked]="theme === option.id"
+            [attr.aria-label]="option.label + ' theme'"
             (click)="selectTheme(option.id)"
           >
-            <div class="theme-preview" [ngStyle]="option.previewStyle"></div>
+            <div class="theme-preview" [ngStyle]="option.previewStyle" aria-hidden="true"></div>
             <span>{{ option.label }}</span>
           </button>
         </div>
@@ -60,7 +74,7 @@
         <button type="button" class="btn btn-primary start-btn" (click)="startGame()">
           Start
         </button>
-      </div>
+      </fieldset>
     </section>
   </div>
 </div>
